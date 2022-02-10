@@ -1,3 +1,4 @@
+﻿using AuthServer.Core.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,10 +28,10 @@ namespace AuthServer.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //DI container'a bir nesne ge�tik
-            //Options pattern 
+            //DI container'a bir nesne geçtik 
+            //Options pattern -> DI üzerinden appsetting'deki datalara ulaşmaya denir.
             services.Configure<CustomTokenOption>(Configuration.GetSection("TokenOption"));
-
+            services.Configure<Client>(Configuration.GetSection("Client"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
