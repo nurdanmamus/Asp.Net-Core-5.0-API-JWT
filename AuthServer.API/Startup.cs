@@ -39,7 +39,7 @@ namespace AuthServer.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>(); 
             services.AddScoped<ITokenService, TokenService>(); 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(IServiceGeneric<,>),typeof(ServiceGeneric<,>)); 
@@ -114,6 +114,8 @@ namespace AuthServer.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
