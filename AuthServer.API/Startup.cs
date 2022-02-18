@@ -20,6 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SharedLibrary.Configurations;
+using SharedLibrary.Exceptions;
 using SharedLibrary.Extensions;
 using SharedLibrary.Services;
 using System;
@@ -119,6 +120,12 @@ namespace AuthServer.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthServer.API v1"));
             }
+            else
+            {
+              //  app.UseCustomException(); normalde dev sistemde olmaz
+            }
+
+            app.UseCustomException();  
 
             app.UseHttpsRedirection();
 
