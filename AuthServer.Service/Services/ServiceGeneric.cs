@@ -73,7 +73,7 @@ namespace AuthServer.Service.Services
             //    _genericRepository.Update(isExistEntity);
             var updateEntity = ObjectMapper.Mapper.Map<TEntity>(dto);
 
-            _genericRepository.Update(isExistEntity);
+            _genericRepository.Update(updateEntity); 
 
             await _unitOfWork.CommitAsync();
             //204 durum kodu => no content => response body'sinde data olmayacak.

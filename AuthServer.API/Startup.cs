@@ -6,6 +6,7 @@ using AuthServer.Core.UnitOfWork;
 using AuthServer.Data;
 using AuthServer.Data.Repositories;
 using AuthServer.Service.Services;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +20,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SharedLibrary.Configurations;
+using SharedLibrary.Extensions;
+using SharedLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,7 +86,7 @@ namespace AuthServer.API
                     ValidAudience = tokenOptions.Audience[0], 
                     IssuerSigningKey = SignService.GetSymmetricSecurityKey(tokenOptions.SecurityKey),
 
-                    ValidateIssuerSigningKey = true,
+                    ValidateIssuerSigningKey = true, 
                     ValidateAudience = true,
                     ValidateIssuer=true, 
                     ValidateLifetime = true,
@@ -91,11 +94,17 @@ namespace AuthServer.API
                     //farklı serverlara kurduğumuz api'nin kurulan serverlar ile
                     //saat farkını tölere etmek için 5 dk ekler. biz onu sıfıra 
                 };
+            }); 
+
+            services.AddControllers().AddFluentValidation(options =>
+            {
+                //bu assemblyde bulunan AbstractValidator'ı miras alan sınıflarda uygulanacak
+                options.RegisterValidatorsFromAssemblyContaining<Startup>();
             });
 
-            
+            services.UseCustomValidationResponse(); 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(c => 
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthServer.API", Version = "v1" });
             });

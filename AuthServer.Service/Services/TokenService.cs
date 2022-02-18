@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SharedLibrary.Configurations;
+using SharedLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -48,7 +49,7 @@ namespace AuthServer.Service.Services
             userList.AddRange(audiences.Select(x => new Claim(JwtRegisteredClaimNames.Aud, x)));
             //foreach=select linq
             return userList;
-        } 
+        }  
         //token payload for client -> üyelik sistemi gerektirmeyen
         private IEnumerable<Claim> GetClaimsByClient(Client client)
         {

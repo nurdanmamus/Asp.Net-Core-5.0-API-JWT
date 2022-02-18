@@ -34,7 +34,7 @@ namespace AuthServer.Data.Repositories
         public async Task<TEntity> GetByIdAsync(int id)
         {
             var entity = await _dbSet.FindAsync(id);
-            if (entity!=null)
+            if (entity!=null)  
             {
                 //memoriden ayırmak 
                 _context.Entry(entity).State = EntityState.Detached;
